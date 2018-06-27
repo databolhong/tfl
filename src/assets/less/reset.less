@@ -1,0 +1,105 @@
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  overflow-y: scroll;
+}
+body {
+  background: #fff;
+  color: #555;
+  font-size: 14px;
+  font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-size: 100%;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+ul, ol {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #666666;
+}
+a:hover {text-decoration: none;}
+.fl {
+  float: left
+}
+.fr {
+  float: right
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  *zoom: 1;
+}
+.tel {
+  text-align: left
+}
+.tec {
+  text-align: center
+}
+.ter {
+  text-align: right
+}
+.box-flex {
+  display: flex;
+}
+.box-flex>*, .box-inline-flex>* {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+.box-inline-flex {
+  display: inline-flex;
+}
+.flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+.fill-height {
+  height: 100%;
+}
+
+input {
+  display: block;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+input:focus {
+  outline: none;
+}
+
+/* WebKit browsers */
+input:focus::-webkit-input-placeholder { color:transparent; }
+
+/* Mozilla Firefox 4 to 18 */
+input:focus:-moz-placeholder { color:transparent; }
+
+/* Mozilla Firefox 19+ */
+input:focus::-moz-placeholder { color:transparent; }
+
+/* Internet Explorer 10+ */
+input:focus:-ms-input-placeholder { color:transparent; }
