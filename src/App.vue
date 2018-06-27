@@ -5,19 +5,29 @@
   </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
 export default {
   name: 'App'
 }
 </script>
 
-<style>
+<style lang="less" rel="stylesheet/less">
+@import "assets/less/reset.less";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+#app, body, html {
+  height: 100%;
+  font-size: 0.22rem;
+}
+body, html {
+  overflow: hidden;
+}
+</style>
+<style scoped lang="less" rel="stylesheet/less">
+
 </style>
