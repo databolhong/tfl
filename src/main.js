@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import 'babel-polyfill'
 import App from './App'
+
+import '../static/reset'
+
 import router from './router'
 import store from './vuex/store'
 import axios from './axios/axios'
@@ -10,8 +13,6 @@ import Cookie from 'vue-cookies'
 import Moment from 'vue-moment'
 import 'weui/dist/style/weui.min.css'
 import weuiJs from 'weui.js'
-
-require('./assets/reset')
 
 Vue.config.productionTip = false
 window.$weui = weuiJs
