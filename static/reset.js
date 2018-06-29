@@ -2,7 +2,7 @@
   let e = n.document // 获取document
   let t = e.documentElement // 获取根节点html
   let dpr = n.devicePixelRatio || 1 // 获取屏幕data-dpr值
-  let i = 720 // 初始值720px
+  let i = 750 // 初始值720px
   let d = i / 100 // 假设100px为1rem，那么720px为7.2rem
   let o = 'orientationchange' in n ? 'orientationchange' : 'resize' // 判断是否有改变横屏事件，没有的话用resize事件
   function recalc () {

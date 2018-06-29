@@ -13,7 +13,7 @@ export default {
 <style lang="less" rel="stylesheet/less">
 @import "assets/less/reset.less";
 #app {
-  width: 7.2rem;
+  width: 7.5rem;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

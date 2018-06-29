@@ -11,11 +11,11 @@ import store from './vuex/store'
 import axios from './axios/axios'
 import Cookie from 'vue-cookies'
 import Moment from 'vue-moment'
-import 'weui/dist/style/weui.min.css'
-import weuiJs from 'weui.js'
+// import 'weui/dist/style/weui.min.css'
+// import weuiJs from 'weui.js'
 
 Vue.config.productionTip = false
-window.$weui = weuiJs
+// window.$weui = weuiJs
 Vue.prototype.$axios = axios
 
 Vue.use(Moment)
