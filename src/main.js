@@ -11,15 +11,14 @@ import store from './vuex/store'
 import axios from './axios/axios'
 import Cookie from 'vue-cookies'
 import Moment from 'vue-moment'
-// import 'weui/dist/style/weui.min.css'
-// import weuiJs from 'weui.js'
+import Mintui from 'mint-ui'
 
 Vue.config.productionTip = false
-// window.$weui = weuiJs
 Vue.prototype.$axios = axios
 
 Vue.use(Moment)
 Vue.use(Cookie)
+Vue.use(Mintui)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
