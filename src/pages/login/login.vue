@@ -6,7 +6,7 @@
     </div>
     <div>
       <input v-model="phoneNumber" placeholder="请输入手机号" autocomplete="off" type="number">
-      <span style="width: 2.5rem; text-align: center" @click="sendCode">{{sendText + (sendLogding ? '（' + time + '）' : '')}}</span>
+      <span style="width: 2.5rem; text-align: center" @click="handleSendCode">{{sendText + (sendLogding ? '（' + time + '）' : '')}}</span>
     </div>
     <div>
       <input v-model="code" placeholder="请输入验证码" autocomplete="off" type="text">
@@ -28,7 +28,8 @@ export default {
       code: '',
       sendText: '发送验证码',
       time: 60,
-      sendLogding: false,
+      sendLoading: false,
+      loginLoading: false, // 登录状态
       interval: '',
       str: /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
       strs: /^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$/,
@@ -37,54 +38,84 @@ export default {
   },
   mounted () {},
   methods: {
-    sendCode () {
-      //
-      // if (this.sendLogding) {
-      //   return
-      // }
-      if (this.phoneNumber.length !== 11) {
+    handleSendCode () {
+      if (this.sendLoading) {
         return
       }
-      if (this.num.test(this.phoneNumber)) {
-
-      } else {
+      if (!this.testPhone()) {
         return
       }
-      if (this.idCard) {
-        this.login()
-      } else {
+      if (!this.testID()) {
+        return
       }
-      // // this.sendText = '已发送'
-      // // this.sendLogding = true
-      // // this.interval = setInterval(() => {
-      // //   this.time--
-      // //   if (this.time === 57) {
-      // //     // this.$toast('1234')
-      // //   }
-      // //   if (this.time === -1) {
-      // //     clearInterval(this.interval)
-      // //     this.sendLogding = false
-      // //     this.sendText = '重新发送'
-      // //     this.time = 60
-      // //   }
-      // // }, 1000)
+      this.sendLoading = true
+      this.ajaxIDPhoneverification(() => {
+        this.sendCode()
+      })
     },
-
-    login () {
-      // let kv
-      if (this.idCard.length === 15 || this.idCard.length === 18) {
-        if (this.str.test(this.idCard) || this.strs.test(this.idCard)) {
-          // this.$toast('您的身份证号还未在海宝计划中注册，请联系您的HR注册信息')
-        } else {
-          // this.$toast('请输入正确的15位或18位身份证号')
+    sendCode () {
+      this.sendText = '已发送'
+      this.sendLogding = true
+      this.interval = setInterval(() => {
+        this.time--
+        if (this.time === -1) {
+          clearInterval(this.interval)
+          this.sendLogding = false
+          this.sendText = '重新发送'
+          this.time = 60
         }
-        // this.$store.commit('login', '' + this.idCard)
-        // kv = {'status': '1', 'phoneNumber': '' + this.phoneNumber}
-        // this.$router.push({path: '/home'})
-      } else {
-        // this.$toast('请输入正确的15位或18位身份证号')
-        // kv = {'status': '0', 'phoneNumber': '' + this.phoneNumber, 'error': '身份证号格式错误'}
+      }, 1000)
+    },
+    login () {
+      if (this.loginLoading) {
+        return
       }
+      if (!this.testID()) {
+        return
+      }
+      if (!this.testPhone()) {
+        return
+      }
+      if (this.code.length <= 0) {
+        this.$toast('请输入验证码')
+        return
+      }
+      this.loginLoading = true
+      this.ajaxIDPhoneverification(() => {
+        this.ajaxCodeVerification(() => {
+          this.$router.push({name: 'index'})
+        })
+      })
+    },
+    testID () {
+      if (this.idCard.length <= 0) {
+        this.$toast('身份证号不能为空')
+      } else if (this.idCard.length === 15 || this.idCard.length === 18) {
+        if (this.str.test(this.idCard) || this.strs.test(this.idCard)) {
+          return true
+        } else {
+          this.$toast('身份证号格式错误')
+        }
+      } else {
+        this.$toast('请输入正确的15位或18位身份证号')
+      }
+      return false
+    },
+    testPhone () {
+      if (this.phoneNumber.length <= 0) {
+        this.$toast('手机号不能为空')
+        return false
+      }
+      if (this.phoneNumber.length !== 11 || !this.num.test(this.phoneNumber)) {
+        this.$toast('手机号格式错误')
+        return false
+      }
+      return true
+    },
+    ajaxIDPhoneverification (cb) { // 验证身份证手机号
+      // this.$axios({})
+    },
+    ajaxCodeVerification () { // 验证验证码
     }
   }
 }
