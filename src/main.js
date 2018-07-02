@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import 'babel-polyfill'
 import App from './App'
 
 import '../static/reset'
@@ -11,6 +10,7 @@ import store from './vuex/store'
 import axios from './axios/axios'
 import Cookie from 'vue-cookies'
 import Moment from 'vue-moment'
+import 'mint-ui/lib/style.min.css'
 import Mintui from 'mint-ui'
 
 Vue.config.productionTip = false

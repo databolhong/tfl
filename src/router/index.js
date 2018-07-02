@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import login from '../pages/login/login'
 const NotFoundComponent = r => require.ensure([], () => r(require('../pages/NotFoundComponent.vue')), 'pages')
+const home = r => require.ensure([], () => r(require('../pages/home/home.vue')), 'pages')
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: home
     },
     { path: '*', component: NotFoundComponent }
   ]
