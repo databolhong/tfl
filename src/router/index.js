@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import login from '../pages/login/login'
 const NotFoundComponent = r => require.ensure([], () => r(require('../pages/NotFoundComponent.vue')), 'pages')
 const home = r => require.ensure([], () => r(require('../pages/home/home.vue')), 'pages')
+const haibao = r => require.ensure([], () => r(require('../pages/haibao/haibao.vue')), 'pages')
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ const router = new Router({
       path: '/home',
       name: 'home',
       component: home
+    },
+    {
+      path: '/haibao',
+      name: 'haibao',
+      component: haibao
     },
     { path: '*', component: NotFoundComponent }
   ]
