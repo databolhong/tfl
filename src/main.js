@@ -24,6 +24,9 @@ new Vue({
   el: '#app',
   router,
   store,
+  data: {
+    EVENTBUS: new Vue() // 组件间事件触发使用
+  },
   components: { App },
   template: '<App/>'
 })

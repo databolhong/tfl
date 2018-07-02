@@ -6,7 +6,7 @@
     </div>
     <div>
       <input v-model="phoneNumber" placeholder="请输入手机号" autocomplete="off" type="number">
-      <span style="width: 2.5rem; text-align: center" @click="handleSendCode">{{sendText + (sendLogding ? '（' + time + '）' : '')}}</span>
+      <span style="width: 2.5rem; text-align: center" @click="handleSendCode">{{sendText + (sendLoading ? '（' + time + '）' : '')}}</span>
     </div>
     <div>
       <input v-model="code" placeholder="请输入验证码" autocomplete="off" type="text">
@@ -55,12 +55,12 @@ export default {
     },
     sendCode () {
       this.sendText = '已发送'
-      this.sendLogding = true
+      this.sendLoading = true
       this.interval = setInterval(() => {
         this.time--
         if (this.time === -1) {
           clearInterval(this.interval)
-          this.sendLogding = false
+          this.sendLoading = false
           this.sendText = '重新发送'
           this.time = 60
         }
@@ -83,6 +83,7 @@ export default {
       this.loginLoading = true
       this.ajaxIDPhoneverification(() => {
         this.ajaxCodeVerification(() => {
+          this.loginLoading = false
           this.$router.push({name: 'index'})
         })
       })

@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import login from '../pages/login/login'
+const NotFoundComponent = r => require.ensure([], () => r(require('../pages/NotFoundComponent.vue')), 'pages')
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   linkActiveClass: 'active',
   routes: [
@@ -16,6 +18,13 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
-    }
+    },
+    { path: '*', component: NotFoundComponent }
   ]
 })
+router.beforeEach((to, from, next) => {
+  console.log('to:::', to, 'from:::', from)
+  // Router.push({name: 'login'})
+  next()
+})
+export default router
