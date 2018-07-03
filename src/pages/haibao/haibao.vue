@@ -30,11 +30,11 @@
     <div style="min-height: .4rem">
       <div class="fixedNav" :class="{topFixed: topFixed}">
         <nav class="box-flex nav-button">
-          <div class="flex" :class="{active: navType === 'wytb'}" @click="clickNav(1, 'wytb', $event)">我要投保</div>
-          <div class="flex" :class="{active: navType === 'cpts'}" @click="clickNav(3.4, 'cpts', $event)">产品特色</div>
-          <div class="flex" :class="{active: navType === 'lpsm'}" @click="clickNav(5.8, 'lpsm', $event)">理赔说明</div>
+          <div class="flex" :class="{active: navType === 'wytb'}" @click="clickNav('wytb', $event)">我要投保</div>
+          <div class="flex" :class="{active: navType === 'cpts'}" @click="clickNav('cpts', $event)">产品特色</div>
+          <div class="flex" :class="{active: navType === 'lpsm'}" @click="clickNav('lpsm', $event)">理赔说明</div>
         </nav>
-        <div class="mark-line" :style="{transform: 'translateX(' + longX + 'rem)'}"></div>
+        <!--<div class="mark-line" :style="{transform: 'translateX(' + longX + 'rem)'}"></div>-->
       </div>
     </div>
     <div style="position: relative;">
@@ -60,7 +60,6 @@ export default {
   name: 'haibao',
   data () {
     return {
-      longX: 1,
       navType: 'wytb',
       topFixed: false,
       haibaoNav: 'haibaoNavLeft'
@@ -73,8 +72,8 @@ export default {
     viewDetails () {
       this.$toast('查看详情')
     },
-    clickNav (num, type, $event) {
-      this.longX = parseFloat(num)
+    clickNav (type, $event) {
+      // this.longX = parseFloat(num)
       this.navType = type
     },
     handleScroll () {
@@ -177,16 +176,21 @@ export default {
       line-height: .44rem;
       .active {
         color: #373E4B;
+        position: relative;
+        &::after {
+          position: absolute;
+          bottom: -.05rem;
+          left: 50%;
+          transform: translateX(-.2rem);
+          width: .4rem;
+          height: .12rem;
+          border-radius: .06rem;
+          background: linear-gradient(left, #26EFA5, #26D0B1);
+          background: -moz-linear-gradient(left, #04df8e, #14caa9);
+          background: -o-linear-gradient(left,#04df8e, #14caa9);
+          background: -webkit-gradient(linear, 0% 0%, 100% 100%, from(#04df8e), to(#14caa9));
+        }
       }
-    }
-    .mark-line {
-      width: .4rem;
-      height: .12rem;
-      border-radius: .06rem;
-      background: linear-gradient(left, #26EFA5, #26D0B1);
-      background: -moz-linear-gradient(left, #04df8e, #14caa9);
-      background: -o-linear-gradient(left,#04df8e, #14caa9);
-      background: -webkit-gradient(linear, 0% 0%, 100% 100%, from(#04df8e), to(#14caa9));
     }
     .topFixed {
       position: fixed;
@@ -194,12 +198,12 @@ export default {
       left: 0;
       right: 0;
       background-color: #ffffff;
-      z-index: 99;
+      z-index: 1;
       box-shadow: 0 0 .1rem rgba(0, 0, 0, .1);
     }
     .haibaoTransform {
       position: absolute;
-      width: 7.2rem;
+      width: 7.5rem;
       padding-bottom: 1.04rem;
       margin: auto;
       overflow-x: hidden;

@@ -6,6 +6,8 @@ const NotFoundComponent = r => require.ensure([], () => r(require('../pages/NotF
 const home = r => require.ensure([], () => r(require('../pages/home/home.vue')), 'pages')
 const haibao = r => require.ensure([], () => r(require('../pages/haibao/haibao.vue')), 'pages')
 
+const userinfo = r => require.ensure([], () => r(require('../pages/userinfo/userinfo.vue')), 'pages')
+
 Vue.use(Router)
 
 const router = new Router({
@@ -30,6 +32,11 @@ const router = new Router({
       path: '/haibao',
       name: 'haibao',
       component: haibao
+    },
+    {
+      path: '/userinfo',
+      name: 'userinfo',
+      component: userinfo
     },
     { path: '*', component: NotFoundComponent }
   ]

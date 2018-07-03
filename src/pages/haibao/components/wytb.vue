@@ -10,15 +10,15 @@
         <div><span>{{item.relations}}</span>{{item.name}}</div>
         <div>保额：<span>{{item.insuredAmount ? item.insuredAmount / 10000 + '万' : '未选择'}}</span></div>
         <div>交费期限：<span>{{item.paymentTime || '未选择'}}</span></div>
-        <div class="money">保费：<span>{{item.premium ? item.premium + '元' : '0元'}}</span></div>
+        <div class="money">保费：<span>{{item.premium ? item.premium + '元' : ' 元'}}</span></div>
         <div class="cha" v-if="item.relations !== '本人'" @click.stop="removeTbCart(index)"><i class="iconfont icon-chahao"></i></div>
       </div>
-      <div class="kuang2" v-show="(zhonge / 10000) >=30">
-        <div><span>本人</span>{{tbcl[0].name}}</div>
-        <div>保额：<span>{{tbcl[0].insuredAmount ? tbcl[0].insuredAmount / 10000 + '万' : '未选择'}}</span></div>
-        <div>交费期限：<span>{{tbcl[0].paymentTime ? (tbcl[0].paymentTime === '一次性交费' ? '趸交': tbcl[0].paymentTime) : '未选择'}}</span></div>
-        <div class="money">保费：<span>{{tbcl[0].premium || '0'}}元</span></div>
-      </div>
+      <!--<div class="kuang2" v-show="(zhonge / 10000) >=30">-->
+        <!--<div><span>本人</span>{{tbcl[0].name}}</div>-->
+        <!--<div>保额：<span>{{tbcl[0].insuredAmount ? tbcl[0].insuredAmount / 10000 + '万' : '未选择'}}</span></div>-->
+        <!--<div>交费期限：<span>{{tbcl[0].paymentTime ? (tbcl[0].paymentTime === '一次性交费' ? '趸交': tbcl[0].paymentTime) : '未选择'}}</span></div>-->
+        <!--<div class="money">保费：<span>{{tbcl[0].premium || '0'}}元</span></div>-->
+      <!--</div>-->
     </div>
     <div class="addbbr" @click="addbbr('add', 0)"><span class="add">+</span><span>增加被保人</span></div>
     <div style="margin-top: .3rem ;line-height: .92rem; border-bottom: 1px solid #E6E6E6; font-size: .32rem; color: #373E4B">保费结算</div>
@@ -65,10 +65,11 @@ export default {
   name: 'wytb',
   data () {
     return {
+      selectType: 'type1',
       dataTypes: {
         type1: [
           {
-            relations: '本人',
+            relations: '本人', // 关系
             name: '刘江梅',
             insuredAmount: '300000', // 保额
             paymentTime: '20年',
@@ -164,7 +165,7 @@ export default {
             name: '',
             insuredAmount: '300000',
             paymentTime: '20年',
-            premium: '4067'
+            premium: ''
           }
         ],
         type6: [
@@ -173,7 +174,7 @@ export default {
             name: '刘江梅',
             insuredAmount: '300000',
             paymentTime: '20年',
-            premium: '3067'
+            premium: ''
           },
           {
             relations: '父母',
@@ -201,7 +202,9 @@ export default {
         {type: 'type5', content: '四口之家'},
         {type: 'type6', content: '本人父母'},
         {type: 'type7', content: '自定义'}
-      ]
+      ],
+      tbcl: [],
+      accept: ''
     }
   },
   created () {
@@ -221,9 +224,6 @@ export default {
       })
       return num
     },
-    tbcl () {
-      return JSON.parse(JSON.stringify(this.$store.state.dataArry))
-    },
     showDun () {
       for (let i = 0; i < this.tbcl.length; i++) {
         let item = this.tbcl[i]
@@ -242,41 +242,37 @@ export default {
       }
       return false
     },
-    selectType () {
-      return this.$store.state.selectTBType
-    },
     typs () {
       let obj = {}
       this.tbcl.forEach((item, index) => {
         obj[item.relations] = 1
       })
       return obj
-    },
-    accept () {
-      return this.$store.state.acceptHaibao
     }
   },
   methods: {
     selectTbType (type, content) {
-      this.$store.commit('selectTBType', type)
-      let tbcl = JSON.parse(JSON.stringify(this.dataTypes[type]))
-      window.TDAPP.onEvent('选择参保方案', 'haibao全家海宝页面', {'type': type + '___' + content})
-      this.$store.commit('putIndataArry', tbcl)
+      // this.$store.commit('selectTBType', type)
+      // let tbcl = JSON.parse(JSON.stringify(this.dataTypes[type]))
+      // this.$store.commit('putIndataArry', tbcl)
+      this.selectType = type
+      this.tbcl = JSON.parse(JSON.stringify(this.dataTypes[type]))
     },
     removeTbCart (index) {
       this.tbcl.splice(index, 1)
-      this.$store.commit('selectTBType', 'type7')
-      window.TDAPP.onEvent('删除被保人', 'haibao全家海宝页面')
-      this.$store.commit('removeIndataArry', index)
+      // this.$store.commit('selectTBType', 'type7')
+      // this.$store.commit('removeIndataArry', index)
     },
     addbbr (type, index) {
-      this.$store.commit('addPerson', type + '&' + index)
+      // this.$store.commit('addPerson', type + '&' + index)
+      console.log('addbbr')
+      this.$root.EVENTBUS.$emit('MODELINSURED', {type: type})
     },
     handleAccept () {
-      this.$store.commit('acceptHaibao')
+      // this.$store.commit('acceptHaibao')
     },
     clause () {
-      window.TDAPP.onEvent('查看协议详情', 'haibao全家海宝页面')
+      // window.TDAPP.onEvent('查看协议详情', 'haibao全家海宝页面')
       this.$router.push({name: 'clause'})
     }
   }
