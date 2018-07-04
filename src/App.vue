@@ -1,7 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{overflowHidden: modalMask}">
     <router-view/>
-    <modelInsured class="box-flex modal"></modelInsured>
+    <div class="tfl-modal-wrapper" style="position: absolute; z-index: 50">
+      <modelInsured class="box-flex modal"></modelInsured>
+    </div>
+    <div class="v-modal" v-show="modalMask" style="z-index: 40;"></div>
   </div>
 </template>
 
@@ -9,7 +12,15 @@
 import modelInsured from './components/modelInsured/modelInsured'
 export default {
   components: {modelInsured},
-  name: 'App'
+  name: 'App',
+  created () {
+    console.log('启动')
+  },
+  computed: {
+    modalMask () {
+      return this.$store.state.modalMask
+    }
+  }
 }
 </script>
 
@@ -26,6 +37,9 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  #app.overflowHidden {
+    overflow: hidden;
+  }
 }
 #app, body, html {
   height: 100%;
@@ -34,17 +48,25 @@ export default {
 body, html {
   overflow: hidden;
 }
+.v-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background: #000;
+}
 .modal {
   position: fixed;
   left: 0;
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 50;
-  -webkit-overflow-scrolling: touch;
   outline: 0;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;

@@ -1,5 +1,7 @@
 // vuex 状态
 export default {
   userId: '',
-  insurancePk: ''
+  insurancePk: '',
+  userName: '',
+  modalMask: false
 }

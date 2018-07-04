@@ -1,6 +1,6 @@
 <template>
 <div v-show="show" @click="handleHide">
-  <div class="model-insured">
+  <div class="model-insured" @click.stop="">
     <div>
       <span>{{type === 'edit' ? '编辑' : '新增'}}被保人信息</span>
       <span></span>
@@ -37,6 +37,7 @@ export default {
     this.$root.EVENTBUS.$on('MODELINSURED', this.editShow)
   },
   mounted () {
+    console.log('modelInsured')
   },
   methods: {
     /*
@@ -44,9 +45,11 @@ export default {
     * */
     editShow (obj) {
       this.type = obj.type
+      this.$store.commit('showModalMask')
       this.show = true
     },
     handleHide () {
+      this.$store.commit('hideModalMask')
       this.show = false
     }
   }
@@ -56,8 +59,21 @@ export default {
 <style scoped lang="less" rel="stylesheet/less">
 .model-insured {
   width: 6.14rem;
+  font-size: .36rem;
+  color: #ffffff;
+  background-color: #ffffff;
+  padding: .34rem;
+  border-radius: .16rem;
+  text-align: left;
+  .model-content>div{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #E6E6E6;
+  }
   .footer {
     span {
+      text-align: center;
       display: inline-block;
       font-size: .36rem;
       color: #ffffff;
