@@ -22,9 +22,10 @@ const instance = axios.create({
 axios.interceptors.request.use = instance.interceptors.request.use
 instance.interceptors.request.use(config => {
   // 在发送请求前做点什么
-  if (config.method === 'get' || config.method === 'GET') {
-    config.data = true
-  }
+  // if (config.method === 'get' || config.method === 'GET') {
+  //   config.data = true
+  // }
+  // config.headers['H-TOKEN'] = '111'
   return config
 }, err => {
   // 对请求错误做点什么
