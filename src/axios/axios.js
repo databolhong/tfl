@@ -2,24 +2,29 @@
  * Created by win10 on 2017/11/22.
  */
 import axios from 'axios'
-import cookies from 'vue-cookies'
+// import cookies from 'vue-cookies'
 
 //
-axios.default.timeout = 5000
+axios.defaults.timeout = 5000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.withCredentials = true // 默认携带cookie
 // axios.defaults.baseURL = 'http://192.168.3.145:8000'
-axios.defaults.baseURL = 'http://api.migou360.cn'
-const instance = axios.create()
-instance.defaults.headers.post['Content-Type'] = 'application/json'
+const instance = axios.create({
+  baseURL: '',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  withCredentials: true
+})
+// instance.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 添加请求拦截器，并赋予全局axios
 axios.interceptors.request.use = instance.interceptors.request.use
 instance.interceptors.request.use(config => {
   // 在发送请求前做点什么
-  // if (localStorage.getItem('token')) {
-  //   config.headers.Authorization = `token ${localStorage.getItem('token')}`
-  //     // .replace(/(^\")|(\"$)/g, '')
-  // }
+  if (config.method === 'get' || config.method === 'GET') {
+    config.data = true
+  }
   return config
 }, err => {
   // 对请求错误做点什么
@@ -34,6 +39,7 @@ instance.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 
+/*
 function ajax (method, url, data, cb) {
   let token = cookies.get('token')
   if (token) {
@@ -64,4 +70,6 @@ function ajax (method, url, data, cb) {
     })
 }
 axios._ajax = ajax
-export default axios
+*/
+// export default axios
+export default instance
