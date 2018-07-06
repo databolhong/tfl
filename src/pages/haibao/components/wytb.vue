@@ -6,7 +6,7 @@
       <div class="selectTbTypeBtn" :class="{active: item.type === selectType}" @click="selectTbType(item.type, item.content)" :key="index" v-for="(item, index) in tbType">{{item.content}}</div>
     </div>
     <div style="padding-bottom: .1rem" class="tbrcart-wrap box-flex">
-      <div class="tbrcart" v-for="(item, index) in tbcl" :key="index"  @click="addbbr(index ? 'edit' : 'self', index)">
+      <div class="tbrcart" v-for="(item, index) in tbcl" :key="index"  @click="addbbr('edit', index)">
         <div><span>{{item.relations}}</span>{{item.name}}</div>
         <div>保额：<span>{{item.insuredAmount ? item.insuredAmount / 10000 + '万' : '未选择'}}</span></div>
         <div>交费期限：<span>{{item.paymentTime || '未选择'}}</span></div>

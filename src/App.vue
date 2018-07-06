@@ -1,10 +1,9 @@
 <template>
-  <div id="app" :class="{overflowHidden: modalMask}">
+  <!--<div id="app" :class="{overflowHidden: modalMask}">-->
+  <div id="app">
     <router-view/>
-    <div class="tfl-modal-wrapper" style="position: absolute; z-index: 50">
-      <modelInsured class="box-flex modal"></modelInsured>
-    </div>
     <div class="v-modal" v-show="modalMask" style="z-index: 40;"></div>
+    <modelInsured class="box-flex modal"></modelInsured>
   </div>
 </template>
 
@@ -37,9 +36,9 @@ export default {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  #app.overflowHidden {
-    overflow: hidden;
-  }
+  /*&.overflowHidden {*/
+    /*overflow: hidden;*/
+  /*}*/
 }
 #app, body, html {
   height: 100%;
@@ -58,20 +57,18 @@ body, html {
   background: #000;
 }
 .modal {
-  position: fixed;
+  /*position: fixed;*/
+  position: absolute;
   left: 0;
-  top: 0;
   right: 0;
+  top: 0;
   bottom: 0;
   outline: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  z-index: 50;
   -webkit-overflow-scrolling: touch;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 }
 </style>

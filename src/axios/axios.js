@@ -10,7 +10,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true // 默认携带cookie
 // axios.defaults.baseURL = 'http://192.168.3.145:8000'
 const instance = axios.create({
-  baseURL: '',
+  baseURL: 'http://192.168.3.145:8000',
   headers: {
     'Content-Type': 'application/json'
   },
