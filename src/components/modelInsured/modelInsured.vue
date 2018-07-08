@@ -9,13 +9,13 @@
       <div>
         <div class="insertKey">姓名</div>
         <div class="insertValue">
-          <input type="text">
+          <input type="text" v-model="dataobj.name" placeholder="请输入被保人姓名">
         </div>
       </div>
       <div>
         <div class="insertKey">证件类型</div>
         <div class="insertValue">
-          <select name="" v-model="dataobj.idType">
+          <select v-model="dataobj.idType">
             <option value="">身份证</option>
           </select>
         </div>
@@ -56,7 +56,7 @@
       </div>
     </div>
     <div class="footer">
-      <span @click="save">保存</span>
+      <span @click="handleSave">保存</span>
     </div>
   </div>
 </div>
@@ -69,6 +69,7 @@ export default {
     return {
       show: false,
       type: 'add',
+      saveLoading: false,
       dataobj: {
         name: '', // 姓名
         idType: '', // 证件类型
@@ -77,7 +78,7 @@ export default {
         gender: '', // 性别
         relations: '', // 关系
         insuredAmount: '', // 保额
-        paymentMethod: '',
+        paymentMethod: '', // 交费方式期限
         premium: '' // 保费
       }
     }
@@ -95,7 +96,7 @@ export default {
     * */
     modalShow (obj) {
       this.type = obj.type
-
+      console.log(obj)
       this.$store.commit('showModalMask')
       this.show = true
       if (obj.type === 'add') {
@@ -110,8 +111,88 @@ export default {
     addShow (obj) {
       console.log(obj.type)
     },
-    save () {
-      console.log('save')
+    handleSave () {
+      if (this.saveLoading) {
+        return
+      }
+      if (!this.test()) {
+        return
+      }
+      console.log('this.ajaxSave()')
+      // this.ajaxSave()
+    },
+    ajaxSave () {
+      let obj = this.dataobj
+      let data = {
+        name: obj.name.trim(),
+        idType: obj.idType,
+        id: obj.id,
+        birthday: obj.birthday,
+        gender: obj.gender,
+        relations: obj.relations,
+        insuredAmount: obj.insuredAmount,
+        paymentMethod: obj.paymentMethod
+        // paymentHandline: ''
+      }
+      this.saveLoading = true
+      this.$axios({
+        method: 'post',
+        url: '',
+        data: data
+      }).then((response) => {
+        console.log(response)
+        this.saveLoading = false
+        if (response.data.success) {
+          this.handleHide()
+        }
+      }).catch((error) => {
+        this.saveLoading = false
+        console.log(error)
+      })
+    },
+    test () {
+      if (!this.dataobj.name.trim()) {
+        this.$toast('姓名不能为空')
+        return false
+      }
+      if (!this.testID()) {
+        return false
+      }
+      if (!this.dataobj.gender) {
+        this.$toast('请选择性别')
+        return false
+      }
+      if (!this.dataobj.relations) {
+        this.$toast('请选择被保人与本人关系')
+        return false
+      }
+      if (!this.dataobj.paymentMethod) {
+        this.$toast('请选择交费期限')
+        return false
+      }
+      return true
+    },
+    testID () {
+      let id = this.dataobj.id
+      let numreg = /^[A-Za-z0-9]+$/ // 数字字母组合
+      if (id.length <= 0) {
+        this.$toast('证件号不能为空')
+        return false
+      }
+      if (!numreg.test(id)) {
+        this.$toast('证件号格式错误')
+        return false
+      }
+      /*
+      * 根据证件类型具体错误判断提示
+      */
+      // switch (this.dataobj.idType) {
+      //   case '':
+      //
+      //     return
+      //   default:
+      //     return
+      // }
     },
     handleHide () {
       this.$store.commit('hideModalMask')
@@ -124,6 +205,7 @@ export default {
         gender: '', // 性别
         relations: '', // 关系
         insuredAmount: '', // 保额
+        paymentMethod: '', // 交费方式期限
         premium: '' // 保费
       }
     }
@@ -170,6 +252,7 @@ export default {
     font-size: .32rem;
   }
   .footer {
+    margin-top: .6rem;
     span {
       text-align: center;
       display: inline-block;
@@ -178,10 +261,10 @@ export default {
       width: 5.34rem;
       line-height: .88rem;
       border-radius: .44rem;
-      background: linear-gradient(left, #04DF8E, #14CAA9);
-      background: -moz-linear-gradient(left, #04df8e, #14caa9);
-      background: -o-linear-gradient(left,#04df8e, #14caa9);
-      background: -webkit-gradient(linear, 0% 0%, 100% 100%, from(#04df8e), to(#14caa9));
+      background: linear-gradient(to right, #04DF8E, #14CAA9);
+      /*background: -moz-linear-gradient(left, #04df8e, #14caa9);*/
+      /*background: -o-linear-gradient(left,#04df8e, #14caa9);*/
+      /*background: -webkit-gradient(linear, 0% 0%, 100% 100%, from(#04df8e), to(#14caa9));*/
     }
   }
   select {
@@ -191,6 +274,7 @@ export default {
     -webkit-appearance: none;
     border: none;
     outline: none;
+    background-color: #ffffff;
   }
 }
 </style>
