@@ -1,5 +1,5 @@
 <template>
-<div v-show="show" @click="handleHide">
+<div v-show="show" class="box-flex" @click="handleHide">
   <div class="model-insured" @click.stop="">
     <div class="title clearfix">
       <span class="title-text fl">{{type === 'edit' ? '编辑' : '新增'}}被保人信息</span>

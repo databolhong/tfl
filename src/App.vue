@@ -3,7 +3,7 @@
   <div id="app">
     <router-view/>
     <div class="v-modal" v-show="modalMask" style="z-index: 40;"></div>
-    <modelInsured class="box-flex modal"></modelInsured>
+    <modelInsured class="modal"></modelInsured>
   </div>
 </template>
 
