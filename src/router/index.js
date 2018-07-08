@@ -41,7 +41,7 @@ const router = new Router({
     { path: '*', component: NotFoundComponent }
   ]
 })
-router.beforeEach((to, from, next) => {
+router.beforeEach(function (to, from, next) {
   console.log('to:::', to, 'from:::', from)
   // Router.push({name: 'login'})
   next()
